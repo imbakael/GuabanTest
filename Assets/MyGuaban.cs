@@ -46,6 +46,9 @@ public class MyGuaban : MonoBehaviour {
     /// </summary>
     /// <param name="activeNeighbor">自己邻居支架（邻居支架的旋转和移动已计算完毕）</param>
     /// <param name="neighborDirection">邻居是否在自己的左侧</param>
+    /// 
+
+    // 能量最低原则：用最小的位移和旋转就可以让corner尽可能重合，优先旋转因为旋转耗能低，其次才是位移
     public void Refresh(MyZhijia activeNeighbor, bool isNeighborLeft, bool useTop) {
         if (Mathf.Abs(activeNeighbor.front.transform.position.x - transform.parent.position.x) < Mathf.Epsilon) {
             Debug.Log("支架推移行程几乎相同");
