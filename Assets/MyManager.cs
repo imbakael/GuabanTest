@@ -14,6 +14,7 @@ public class MyManager : MonoBehaviour {
      * 4.只有一个主动件，剩余件的中部槽中心特征点低于主动件
      * 5.满足形变的传导，即主动件运动后，最靠近主动件的中部槽A进行运动+旋转，完事后下一个B槽在基于A的位置进行运动+旋转，直至某个槽N不需要旋转
     */
+
     public MyZhijia[] zhijias;
 
     public MyZhijia testZhijia;
@@ -24,9 +25,9 @@ public class MyManager : MonoBehaviour {
             MyZhijia curZhijia = zhijias[i];
             MyZhijia leftZhijia = i - 1 >= 0 ? zhijias[i - 1] : null;
             MyZhijia rightZhijia = i + 1 < zhijias.Length ? zhijias[i + 1] : null;
-            curZhijia.guaban.SetCorners(leftZhijia?.guaban.cornerPoints, rightZhijia?.guaban.cornerPoints);
-
+            curZhijia.guaban.SetZhijia(leftZhijia, rightZhijia);
         }
+
     }
 
     private void Update() {
