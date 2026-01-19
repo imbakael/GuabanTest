@@ -49,6 +49,7 @@ public class MyGuaban : MonoBehaviour {
     /// 
 
     // 能量最低原则：用最小的位移和旋转就可以让corner尽可能重合，优先旋转因为旋转耗能低，其次才是位移
+    // 唯一解原则：当长宽的中部槽、哑铃销长度为定值时，推溜某个支架时其他支架的运动只有唯一解
     public void Refresh(MyZhijia activeNeighbor, bool isNeighborLeft, bool useTop) {
         if (Mathf.Abs(activeNeighbor.front.transform.position.x - transform.parent.position.x) < Mathf.Epsilon) {
             Debug.Log("支架推移行程几乎相同");
@@ -86,10 +87,7 @@ public class MyGuaban : MonoBehaviour {
     }
 
     private float NormalizeAngle(float angle) {
-        // 确保角度在0-360度范围内
         angle = angle % 360;
-
-        // 如果角度大于180度，转换为负数等效角度
         if (angle > 180)
             angle -= 360;
 
