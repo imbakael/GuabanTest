@@ -19,8 +19,16 @@ public class MyManager : MonoBehaviour {
 
     public MyZhijia testZhijia;
 
-    private void Start() {
+    public float maxAngle;
 
+    public float yalingxiaoLength = 0.05f;
+    public float SqrYalingxiaoLength;
+
+    public static MyManager Instance;
+
+    private void Start() {
+        Instance = this;
+        SqrYalingxiaoLength = yalingxiaoLength * yalingxiaoLength;
         for (int i = 0; i < zhijias.Length; i++) {
             MyZhijia curZhijia = zhijias[i];
             MyZhijia leftZhijia = i - 1 >= 0 ? zhijias[i - 1] : null;

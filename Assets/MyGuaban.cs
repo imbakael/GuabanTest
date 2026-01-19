@@ -24,7 +24,6 @@ public class MyGuaban : MonoBehaviour {
     public float limitAngle = 3f;
 
     public MyLiangan liangan;
-    public MyFront front; // 向前移动local move x
     public float yalingshaoLength; // 哑铃销长度
 
     public void SetZhijia(MyZhijia leftZhijia, MyZhijia rightZhijia) {
@@ -40,34 +39,43 @@ public class MyGuaban : MonoBehaviour {
         // 自身绕y轴旋转
         transform.localRotation *= Quaternion.AngleAxis(1f, Vector3.up);
 
-        front.transform.localPosition += new Vector3(-0.1f, 0f, 0f);
     }
 
-    [Button("Refresh")]
     /// <summary>
     /// 根据邻居支架刷新自身位置和旋转
     /// </summary>
     /// <param name="activeNeighbor">自己邻居支架（邻居支架的旋转和移动已计算完毕）</param>
     /// <param name="neighborDirection">邻居是否在自己的左侧</param>
-    public void Refresh(MyZhijia activeNeighbor, bool isNeighborLeft) {
+    public void Refresh(MyZhijia activeNeighbor, bool isNeighborLeft, bool useTop) {
+        if (Mathf.Abs(activeNeighbor.front.transform.position.x - transform.parent.position.x) < Mathf.Epsilon) {
+            Debug.Log("支架推移行程几乎相同");
+            return;
+        }
         Transform neighborTop = isNeighborLeft ? activeNeighbor.guaban.GetCorner(CornerDirection.右上) : activeNeighbor.guaban.GetCorner(CornerDirection.左上);
         Transform neighborBottom = isNeighborLeft ? activeNeighbor.guaban.GetCorner(CornerDirection.右下) : activeNeighbor.guaban.GetCorner(CornerDirection.左下);
 
         Transform selfTop = isNeighborLeft ? GetCorner(CornerDirection.左上) : GetCorner(CornerDirection.右上);
         Transform selfBottom = isNeighborLeft ? GetCorner(CornerDirection.左下) : GetCorner(CornerDirection.右下);
 
+        Transform neighbor = useTop ? neighborTop : neighborBottom;
+        Transform self = useTop ? selfTop : selfBottom;
+
+        //Debug.Log("初始距离 = " + (self.position - neighbor.position).sqrMagnitude);
+
         float minDistance = float.MaxValue;
         Quaternion targetRotation = Quaternion.identity;
-        transform.rotation = Quaternion.AngleAxis(-3, Vector3.up);
-        while (NormalizeAngle(transform.localEulerAngles.y) <= 3f) {
-            float distance = (selfBottom.position - neighborBottom.position).sqrMagnitude;
+        transform.localRotation = Quaternion.AngleAxis(-MyManager.Instance.maxAngle, Vector3.up);
+        while (NormalizeAngle(transform.localEulerAngles.y) <= MyManager.Instance.maxAngle) {
+            float distance = (self.position - neighbor.position).sqrMagnitude;
+            // distance <= MyManager.Instance.SqrYalingxiaoLength
             if (distance < minDistance) {
                 minDistance = distance;
-                targetRotation = transform.rotation;
+                targetRotation = transform.localRotation;
             }
-            transform.rotation *= Quaternion.AngleAxis(0.01f, Vector3.up);
+            transform.localRotation *= Quaternion.AngleAxis(0.01f, Vector3.up);
         }
-        transform.rotation = targetRotation;
+        transform.localRotation = targetRotation;
+        //Debug.Log("计算后距离 = " + (self.position - neighbor.position).sqrMagnitude);
     }
 
     private void Update() {

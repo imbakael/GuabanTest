@@ -365,6 +365,9 @@ MonoBehaviour:
   guaban: {fileID: 4179484596801231316}
   liangan: {fileID: 5558225907153322419}
   isActive: 0
+  front: {fileID: 6810273496886655088}
+  leftZhijia: {fileID: 0}
+  useTop: 0
 --- !u!1 &5558225907998707219
 GameObject:
   m_ObjectHideFlags: 0
@@ -641,12 +644,11 @@ MonoBehaviour:
   - {fileID: 5558225908382985328}
   - {fileID: 5558225908032483434}
   - {fileID: 5558225908694024925}
-  leftCornerPoints: []
-  rightCornerPoints: []
+  leftZhijia: {fileID: 0}
+  rightZhijia: {fileID: 0}
   center: {fileID: 5558225907540661437}
   bottomLink: {fileID: 6857744425347086823}
   currentAngle: 0
   limitAngle: 3
   liangan: {fileID: 5558225907153322419}
-  front: {fileID: 6810273496886655088}
   yalingshaoLength: 0
