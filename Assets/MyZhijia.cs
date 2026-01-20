@@ -11,16 +11,14 @@ public class MyZhijia : MonoBehaviour {
     public MyFront front;
 
     // test
-    public MyZhijia leftZhijia;
+    public MyZhijia activeZhijia;
     public bool useTop;
-
-    public void TryToModify() {
-        guaban.Modify();
-    }
 
     [Button("¸úËæ")]
     public void Follow() {
-        guaban.Refresh(leftZhijia, true, useTop);
+        //if (!activeZhijia.front.transform.hasChanged) {
+        //    return;
+        //}
+        guaban.Refresh(activeZhijia, false, useTop);
     }
-
 }

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class MyManager : MonoBehaviour {
@@ -8,18 +9,23 @@ public class MyManager : MonoBehaviour {
 
     /* 
      * 中部槽之间的规律：
-     * 1.必须满足左右分别有一个corner与左右邻居中部槽的一个corner【尽可能】的重合
-     * 2.运动方式只有两种：中部槽绕自身底部中心旋转、推移连杆向正前方移动(忽略推移连杆的左右摇摆)
+     * 1.必须满足左右分别有一个corner与左右邻居中部槽的一个corner重合
+     * 2.运动方式只有3种：中部槽绕自身底部中心旋转、推移连杆向正前方移动、推移连杆的左右摇摆
      * 3.中部槽旋转角度不超过3°
      * 4.只有一个主动件，剩余件的中部槽中心特征点低于主动件
      * 5.满足形变的传导，即主动件运动后，最靠近主动件的中部槽A进行运动+旋转，完事后下一个B槽在基于A的位置进行运动+旋转，直至某个槽N不需要旋转
+     * 
+     * 一句话：通过中部槽绕自身旋转、推移连杆摇摆、推移连杆前后移动，使得中部槽的corner始终与邻居的corner重合
     */
 
     public MyZhijia[] zhijias;
 
-    public MyZhijia testZhijia;
-
-    public float maxAngle;
+    [Header("刮板最大水平旋转角")]
+    public float maxGuabanAngle;
+    [Header("连接头最大水平旋转角")]
+    public float maxLianjietouAngle;
+    [Header("推移连杆最大水平旋转角")]
+    public float maxTuiganAngle;
 
     public float yalingxiaoLength = 0.05f;
     public float SqrYalingxiaoLength;
@@ -42,10 +48,15 @@ public class MyManager : MonoBehaviour {
 
         if (Input.GetKeyDown(KeyCode.Space)) {
             // 处理邻居刮板和推移连杆
-            Debug.Log("处理邻居刮板和推移连杆");
-            testZhijia.TryToModify();
+            //Debug.Log("处理邻居刮板和推移连杆");
+            int index = 0;
+            while (index < zhijias.Length) {
+                if (!zhijias[index].isActive) {
+                    zhijias[index].Follow();
+                }
+                index++;
+            }
         }
-
 
         // 存在异常角点时
         while (ExistAbnormalCornerPoints()) {
@@ -53,6 +64,17 @@ public class MyManager : MonoBehaviour {
             // 2.若中部槽旋转仍有异常点，则推移连杆向前移动Δd距离(需保证已经到最大行程的推移连杆不动，S弯区段的推移连杆才能动)
 
 
+        }
+
+        if (zhijias.Any(t => t.front.transform.hasChanged)) {
+            int index = 0;
+            while (index < zhijias.Length) {
+                if (!zhijias[index].isActive) {
+                    zhijias[index].Follow();
+                }
+                zhijias[index].front.transform.hasChanged = false;
+                index++;
+            }
         }
         //int index = 0;
         //while (index < zhijias.Length) {
