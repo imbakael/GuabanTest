@@ -50,6 +50,8 @@ public class MyGuaban : MonoBehaviour {
 
     // 能量最低原则：用最小的位移和旋转就可以让corner尽可能重合，优先旋转因为旋转耗能低，其次才是位移
     // 唯一解原则：当长宽的中部槽、哑铃销长度为定值时，推溜某个支架时其他支架的运动只有唯一解
+
+    // todo 动态计算用top corner还是 bottom corner
     public void Refresh(MyZhijia activeNeighbor, bool isNeighborLeft, bool useTop) {
         if (Mathf.Abs(activeNeighbor.front.transform.position.x - transform.parent.position.x) < Mathf.Epsilon) {
             Debug.Log("支架推移行程几乎相同");
@@ -118,7 +120,7 @@ public class MyGuaban : MonoBehaviour {
         Lianjietou.localRotation = targetLianjietouRotation;
 
         //Debug.Log("计算后距离 = " + (self.position - neighbor.position).sqrMagnitude);
-        Debug.Log($"第一次循环次数：{fristCount}, 第二次循环次数：{secondCount}, 刮板旋转角：{NormalizeAngle(transform.localEulerAngles.y)}, 连接头旋转角：{NormalizeAngle(Lianjietou.localEulerAngles.y)}");
+        Debug.Log($"{GetComponentInParent<MyZhijia>().name} 循环次数：{fristCount} / {secondCount}, 刮板：{NormalizeAngle(transform.localEulerAngles.y)}, 连接头：{NormalizeAngle(Lianjietou.localEulerAngles.y)}");
     }
 
     private float NormalizeAngle(float angle) {
