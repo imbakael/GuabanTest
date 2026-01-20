@@ -157,7 +157,7 @@ MonoBehaviour:
   - {fileID: 1247492956}
   - {fileID: 511980987}
   maxGuabanAngle: 3
-  maxLianjietouAngle: 1
+  maxLianjietouAngle: 2
   maxTuiganAngle: 3
   yalingxiaoLength: 0.05
   SqrYalingxiaoLength: 0

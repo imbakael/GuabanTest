@@ -94,11 +94,12 @@ public class MyGuaban : MonoBehaviour {
         Lianjietou.localRotation = targetLianjietouRotation;
 
         float selfAngle = NormalizeAngle(transform.localEulerAngles.y);
-        float selfMinAngle = Mathf.Clamp(selfAngle - 1f, -MyManager.Instance.maxGuabanAngle, MyManager.Instance.maxGuabanAngle);
-        float selfMaxAngle = Mathf.Clamp(selfAngle + 1f, -MyManager.Instance.maxGuabanAngle, MyManager.Instance.maxGuabanAngle);
+        float delta = 0.5f;
+        float selfMinAngle = Mathf.Clamp(selfAngle - delta, -MyManager.Instance.maxGuabanAngle, MyManager.Instance.maxGuabanAngle);
+        float selfMaxAngle = Mathf.Clamp(selfAngle + delta, -MyManager.Instance.maxGuabanAngle, MyManager.Instance.maxGuabanAngle);
         float lianjietouAngle = NormalizeAngle(Lianjietou.localEulerAngles.y);
-        float lianjietouMinAngle = Mathf.Clamp(lianjietouAngle - 1f, -MyManager.Instance.maxLianjietouAngle, MyManager.Instance.maxLianjietouAngle);
-        float lianjietouMaxAngle = Mathf.Clamp(lianjietouAngle + 1f, -MyManager.Instance.maxLianjietouAngle, MyManager.Instance.maxLianjietouAngle);
+        float lianjietouMinAngle = Mathf.Clamp(lianjietouAngle - delta, -MyManager.Instance.maxLianjietouAngle, MyManager.Instance.maxLianjietouAngle);
+        float lianjietouMaxAngle = Mathf.Clamp(lianjietouAngle + delta, -MyManager.Instance.maxLianjietouAngle, MyManager.Instance.maxLianjietouAngle);
         transform.localRotation = Quaternion.AngleAxis(selfMinAngle, Vector3.up);
 
         while (NormalizeAngle(transform.localEulerAngles.y) <= selfMaxAngle) {
