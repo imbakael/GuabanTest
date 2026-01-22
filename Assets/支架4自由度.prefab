@@ -663,6 +663,7 @@ MonoBehaviour:
   center: {fileID: 8934292915586307136}
   bottomLink: {fileID: 2475273398183460987}
   liangan: {fileID: 5558225907153322419}
+  front: {fileID: 6810273496886655088}
 --- !u!1 &6660514312766773523
 GameObject:
   m_ObjectHideFlags: 0

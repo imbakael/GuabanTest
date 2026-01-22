@@ -32,6 +32,8 @@ public class MyGuaban : MonoBehaviour {
         }
     }
 
+    public MyFront front;
+
     public void SetZhijia(MyZhijia leftZhijia, MyZhijia rightZhijia) {
         this.leftZhijia = leftZhijia;
         this.rightZhijia = rightZhijia;
@@ -53,7 +55,7 @@ public class MyGuaban : MonoBehaviour {
 
     // todo 动态计算用top corner还是 bottom corner
     public void Refresh(MyZhijia activeNeighbor, bool isNeighborLeft, bool useTop) {
-        if (Mathf.Abs(activeNeighbor.front.transform.position.x - transform.parent.position.x) < Mathf.Epsilon) {
+        if (Mathf.Abs(activeNeighbor.front.transform.localPosition.x - front.transform.localPosition.x) < Mathf.Epsilon) {
             Debug.Log("支架推移行程几乎相同");
             return;
         }
@@ -121,7 +123,20 @@ public class MyGuaban : MonoBehaviour {
         Lianjietou.localRotation = targetLianjietouRotation;
 
         //Debug.Log("计算后距离 = " + (self.position - neighbor.position).sqrMagnitude);
-        Debug.Log($"{GetComponentInParent<MyZhijia>().name} 循环次数：{fristCount} / {secondCount}, 刮板：{NormalizeAngle(transform.localEulerAngles.y)}, 连接头：{NormalizeAngle(Lianjietou.localEulerAngles.y)}");
+        Debug.Log($"{GetComponentInParent<MyZhijia>().name} 循环次数：{fristCount} / {secondCount}, " +
+            $"刮板：{NormalizeAngle(transform.localEulerAngles.y)}, 连接头：{NormalizeAngle(Lianjietou.localEulerAngles.y)}");
+
+        Vector3 originPos = front.transform.localPosition;
+
+        float t = 0f;
+        while ((self.position - neighbor.position).sqrMagnitude > MyManager.Instance.SqrYalingxiaoLength) {
+            t += 0.01f;
+            front.transform.localPosition = Vector3.Lerp(originPos, activeNeighbor.front.transform.localPosition, t);
+            if (t >= 1f) {
+                break;
+            }
+        }
+
     }
 
     private float NormalizeAngle(float angle) {

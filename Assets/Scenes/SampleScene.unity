@@ -155,11 +155,11 @@ MonoBehaviour:
   zhijias:
   - {fileID: 1781104418}
   - {fileID: 1247492956}
-  - {fileID: 511980987}
+  - {fileID: 1396149667}
   maxGuabanAngle: 1
-  maxLianjietouAngle: 1
+  maxLianjietouAngle: 2
   maxTuiganAngle: 3
-  yalingxiaoLength: 0.05
+  yalingxiaoLength: 0.00873
   SqrYalingxiaoLength: 0
 --- !u!4 &482203577
 Transform:
@@ -176,17 +176,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &511980987 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 5558225907867816341, guid: ed132f208c64f4f48ad2f99f4ec7ebad, type: 3}
-  m_PrefabInstance: {fileID: 846585786}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 95cfee61e9e2caf4e8014cf0433a984b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -344,6 +333,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: "\u53F33\u652F\u67B6"
       objectReference: {fileID: 0}
+    - target: {fileID: 5558225907867816347, guid: ed132f208c64f4f48ad2f99f4ec7ebad, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ed132f208c64f4f48ad2f99f4ec7ebad, type: 3}
 --- !u!1 &963194225
@@ -434,6 +427,17 @@ Transform:
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5558225907867816341, guid: ed132f208c64f4f48ad2f99f4ec7ebad, type: 3}
   m_PrefabInstance: {fileID: 1888372531}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 95cfee61e9e2caf4e8014cf0433a984b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1396149667 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5558225907867816341, guid: ed132f208c64f4f48ad2f99f4ec7ebad, type: 3}
+  m_PrefabInstance: {fileID: 846585786}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
