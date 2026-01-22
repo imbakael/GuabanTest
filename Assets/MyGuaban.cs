@@ -13,10 +13,6 @@ public enum CornerDirection {
 public class MyGuaban : MonoBehaviour {
 
     public Transform[] cornerPoints;
-
-    public MyZhijia leftZhijia;
-    public MyZhijia rightZhijia;
-
     public Transform center;
     public Transform bottomLink;
 
@@ -32,11 +28,14 @@ public class MyGuaban : MonoBehaviour {
         }
     }
 
-    public MyFront front;
-
-    public void SetZhijia(MyZhijia leftZhijia, MyZhijia rightZhijia) {
-        this.leftZhijia = leftZhijia;
-        this.rightZhijia = rightZhijia;
+    private MyZhijia selfZhijia;
+    public MyZhijia SelfZhijia {
+        get {
+            if (selfZhijia == null) {
+                selfZhijia = GetComponentInParent<MyZhijia>();
+            }
+            return selfZhijia;
+        }
     }
 
     public Transform GetCorner(CornerDirection direction) {
@@ -47,18 +46,18 @@ public class MyGuaban : MonoBehaviour {
     /// 根据邻居支架刷新自身位置和旋转
     /// </summary>
     /// <param name="activeNeighbor">自己邻居支架（邻居支架的旋转和移动已计算完毕）</param>
-    /// <param name="neighborDirection">邻居是否在自己的左侧</param>
     /// 
 
     // 能量最低原则：用最小的位移和旋转就可以让corner尽可能重合，优先旋转因为旋转耗能低，其次才是位移
     // 唯一解原则：当长宽的中部槽、哑铃销长度为定值时，推溜某个支架时其他支架的运动只有唯一解
 
     // todo 动态计算用top corner还是 bottom corner
-    public void Refresh(MyZhijia activeNeighbor, bool isNeighborLeft, bool useTop) {
-        if (Mathf.Abs(activeNeighbor.front.transform.localPosition.x - front.transform.localPosition.x) < Mathf.Epsilon) {
+    public void Refresh(MyZhijia activeNeighbor, bool useTop) {
+        if (Mathf.Abs(activeNeighbor.front.transform.localPosition.x - SelfZhijia.front.transform.localPosition.x) < Mathf.Epsilon) {
             Debug.Log("支架推移行程几乎相同");
             return;
         }
+        bool isNeighborLeft = SelfZhijia.leftZhijia == activeNeighbor;
         Transform neighborTop = isNeighborLeft ? activeNeighbor.guaban.GetCorner(CornerDirection.右上) : activeNeighbor.guaban.GetCorner(CornerDirection.左上);
         Transform neighborBottom = isNeighborLeft ? activeNeighbor.guaban.GetCorner(CornerDirection.右下) : activeNeighbor.guaban.GetCorner(CornerDirection.左下);
 
@@ -68,64 +67,10 @@ public class MyGuaban : MonoBehaviour {
         Transform neighbor = useTop ? neighborTop : neighborBottom;
         Transform self = useTop ? selfTop : selfBottom;
 
-        //Debug.Log("初始距离 = " + (self.position - neighbor.position).sqrMagnitude);
-        int fristCount = 0;
-        int secondCount = 0;
-
         Quaternion originSelfRot = transform.localRotation;
         Quaternion originLianjietouRot = Lianjietou.localRotation;
 
-        float minDistance = float.MaxValue;
-        Quaternion targetRotation = Quaternion.identity;
-        Quaternion targetLianjietouRotation = Quaternion.identity;
-        transform.localRotation = Quaternion.AngleAxis(-MyManager.Instance.maxGuabanAngle, Vector3.up);
-
-        while (NormalizeAngle(transform.localEulerAngles.y) <= MyManager.Instance.maxGuabanAngle) {
-            Lianjietou.localRotation = Quaternion.AngleAxis(-MyManager.Instance.maxLianjietouAngle, Vector3.up);
-            while (NormalizeAngle(Lianjietou.localEulerAngles.y) <= MyManager.Instance.maxLianjietouAngle) {
-                fristCount++;
-                float distance = (self.position - neighbor.position).sqrMagnitude;
-                if (distance < minDistance && !JL.IsSegmentIntersectingRectangle(neighborTop, neighborBottom, 
-                    GetCorner(CornerDirection.左上), GetCorner(CornerDirection.右上), GetCorner(CornerDirection.右下), GetCorner(CornerDirection.左下))) {
-                    minDistance = distance;
-                    targetRotation = transform.localRotation;
-                    targetLianjietouRotation = Lianjietou.localRotation;
-                }
-                Lianjietou.localRotation *= Quaternion.AngleAxis(1f, Vector3.up);
-            }
-            transform.localRotation *= Quaternion.AngleAxis(1f, Vector3.up);
-        }
-
-        transform.localRotation = targetRotation;
-        Lianjietou.localRotation = targetLianjietouRotation;
-
-        float selfAngle = NormalizeAngle(transform.localEulerAngles.y);
-        float delta = 0.5f;
-        float selfMinAngle = Mathf.Clamp(selfAngle - delta, -MyManager.Instance.maxGuabanAngle, MyManager.Instance.maxGuabanAngle);
-        float selfMaxAngle = Mathf.Clamp(selfAngle + delta, -MyManager.Instance.maxGuabanAngle, MyManager.Instance.maxGuabanAngle);
-        float lianjietouAngle = NormalizeAngle(Lianjietou.localEulerAngles.y);
-        float lianjietouMinAngle = Mathf.Clamp(lianjietouAngle - delta, -MyManager.Instance.maxLianjietouAngle, MyManager.Instance.maxLianjietouAngle);
-        float lianjietouMaxAngle = Mathf.Clamp(lianjietouAngle + delta, -MyManager.Instance.maxLianjietouAngle, MyManager.Instance.maxLianjietouAngle);
-        transform.localRotation = Quaternion.AngleAxis(selfMinAngle, Vector3.up);
-
-        while (NormalizeAngle(transform.localEulerAngles.y) <= selfMaxAngle) {
-            Lianjietou.localRotation = Quaternion.AngleAxis(lianjietouMinAngle, Vector3.up);
-            while (NormalizeAngle(Lianjietou.localEulerAngles.y) <= lianjietouMaxAngle) {
-                secondCount++;
-                float distance = (self.position - neighbor.position).sqrMagnitude;
-                if (distance < minDistance && !JL.IsSegmentIntersectingRectangle(neighborTop, neighborBottom,
-                    GetCorner(CornerDirection.左上), GetCorner(CornerDirection.右上), GetCorner(CornerDirection.右下), GetCorner(CornerDirection.左下))) {
-                    minDistance = distance;
-                    targetRotation = transform.localRotation;
-                    targetLianjietouRotation = Lianjietou.localRotation;
-                }
-                Lianjietou.localRotation *= Quaternion.AngleAxis(0.1f, Vector3.up);
-            }
-            transform.localRotation *= Quaternion.AngleAxis(0.1f, Vector3.up);
-        }
-
-        transform.localRotation = targetRotation;
-        Lianjietou.localRotation = targetLianjietouRotation;
+        HandleRotate(neighborTop, neighborBottom, neighbor, self);
 
         bool isInter = JL.IsSegmentIntersectingRectangle(neighborTop, neighborBottom,
                     GetCorner(CornerDirection.左上), GetCorner(CornerDirection.右上), GetCorner(CornerDirection.右下), GetCorner(CornerDirection.左下));
@@ -134,9 +79,6 @@ public class MyGuaban : MonoBehaviour {
             transform.localRotation = originSelfRot;
             Lianjietou.localRotation = originLianjietouRot;
         }
-
-        Debug.Log($"{GetComponentInParent<MyZhijia>().name} 循环次数：{fristCount} / {secondCount}, " +
-            $"刮板：{NormalizeAngle(transform.localEulerAngles.y)}, 连接头：{NormalizeAngle(Lianjietou.localEulerAngles.y)}");
 
         //if (GetComponentInParent<MyZhijia>().name == "右2支架") {
         //    Vector3 originPos = front.transform.localPosition;
@@ -150,8 +92,79 @@ public class MyGuaban : MonoBehaviour {
         //        }
         //    }
         //}
-        
 
+    }
+
+    private void HandleRotate(Transform neighborTop, Transform neighborBottom, Transform neighbor, Transform self) {
+        int firstCount = 0;
+        int secondCount = 0;
+        float maxGuabanAngle = MyManager.Instance.maxGuabanAngle;
+        float maxLianjietouAngle = MyManager.Instance.maxLianjietouAngle;
+        float minDistance = float.MaxValue;
+
+        Quaternion targetRotation = Quaternion.identity;
+        Quaternion targetLianjietouRotation = Quaternion.identity;
+
+        CalcRotate(neighborTop, neighborBottom, neighbor, self,
+            -maxGuabanAngle, maxGuabanAngle, -maxLianjietouAngle, maxLianjietouAngle, 1f,
+            ref firstCount, ref minDistance, ref targetRotation, ref targetLianjietouRotation);
+
+        float delta = 0.5f;
+        float currentGuabanAngle = NormalizeAngle(targetRotation.eulerAngles.y);
+        float selfMinAngle = Mathf.Clamp(currentGuabanAngle - delta, -maxGuabanAngle, maxGuabanAngle);
+        float selfMaxAngle = Mathf.Clamp(currentGuabanAngle + delta, -maxGuabanAngle, maxGuabanAngle);
+        float currentLianjietouAngle = NormalizeAngle(targetLianjietouRotation.eulerAngles.y);
+        float lianjietouMinAngle = Mathf.Clamp(currentLianjietouAngle - delta, -maxLianjietouAngle, maxLianjietouAngle);
+        float lianjietouMaxAngle = Mathf.Clamp(currentLianjietouAngle + delta, -maxLianjietouAngle, maxLianjietouAngle);
+
+        CalcRotate(neighborTop, neighborBottom, neighbor, self,
+            selfMinAngle, selfMaxAngle, lianjietouMinAngle, lianjietouMaxAngle, 0.1f,
+            ref secondCount, ref minDistance, ref targetRotation, ref targetLianjietouRotation);
+
+        transform.localRotation = targetRotation;
+        Lianjietou.localRotation = targetLianjietouRotation;
+
+        Debug.Log($"{SelfZhijia.name} 循环次数：{firstCount} / {secondCount}, " +
+            $"刮板：{NormalizeAngle(transform.localEulerAngles.y)}, 连接头：{NormalizeAngle(Lianjietou.localEulerAngles.y)}");
+    }
+
+    /// <summary>
+    /// 基于刮板旋转角和连接头旋转角的范围，使两个刮板连接点处于最小距离，且两个刮板不能有重叠部分
+    /// </summary>
+    /// <param name="neighborTop"></param>
+    /// <param name="neighborBottom"></param>
+    /// <param name="neighbor"></param>
+    /// <param name="self"></param>
+    /// <param name="guabanMinAngle"></param>
+    /// <param name="guabanMaxAngle"></param>
+    /// <param name="lianjietouMinAngle"></param>
+    /// <param name="lianjietouMaxAngle"></param>
+    /// <param name="angleDelta">每次角度的增量</param>
+    /// <param name="loopCount"></param>
+    /// <param name="minDistance"></param>
+    /// <param name="targetRotation"></param>
+    /// <param name="targetLianjietouRotation"></param>
+    private void CalcRotate(Transform neighborTop, Transform neighborBottom, Transform neighbor, Transform self, 
+        float guabanMinAngle, float guabanMaxAngle, float lianjietouMinAngle, float lianjietouMaxAngle, float angleDelta,
+        ref int loopCount, ref float minDistance, ref Quaternion targetRotation, ref Quaternion targetLianjietouRotation) {
+
+        transform.localRotation = Quaternion.AngleAxis(guabanMinAngle, Vector3.up);
+        while (NormalizeAngle(transform.localEulerAngles.y) <= guabanMaxAngle) {
+            Lianjietou.localRotation = Quaternion.AngleAxis(lianjietouMinAngle, Vector3.up);
+            while (NormalizeAngle(Lianjietou.localEulerAngles.y) <= lianjietouMaxAngle) {
+                loopCount++;
+                float distance = (self.position - neighbor.position).sqrMagnitude;
+                if (distance < minDistance && !JL.IsSegmentIntersectingRectangle(neighborTop, neighborBottom,
+                    GetCorner(CornerDirection.左上), GetCorner(CornerDirection.右上), GetCorner(CornerDirection.右下), GetCorner(CornerDirection.左下))) {
+
+                    minDistance = distance;
+                    targetRotation = transform.localRotation;
+                    targetLianjietouRotation = Lianjietou.localRotation;
+                }
+                Lianjietou.localRotation *= Quaternion.AngleAxis(angleDelta, Vector3.up);
+            }
+            transform.localRotation *= Quaternion.AngleAxis(angleDelta, Vector3.up);
+        }
     }
 
     private float NormalizeAngle(float angle) {

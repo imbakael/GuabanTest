@@ -32,6 +32,8 @@ public class MyManager : MonoBehaviour {
 
     public static MyManager Instance;
 
+    public float moveSpeed = 0.1f;
+
     private void Start() {
         Instance = this;
         SqrYalingxiaoLength = yalingxiaoLength * yalingxiaoLength;
@@ -39,12 +41,16 @@ public class MyManager : MonoBehaviour {
             MyZhijia curZhijia = zhijias[i];
             MyZhijia leftZhijia = i - 1 >= 0 ? zhijias[i - 1] : null;
             MyZhijia rightZhijia = i + 1 < zhijias.Length ? zhijias[i + 1] : null;
-            curZhijia.guaban.SetZhijia(leftZhijia, rightZhijia);
+            curZhijia.SetZhijia(leftZhijia, rightZhijia);
         }
-
     }
 
     private void Update() {
+
+        //for (int i = 0; i < zhijias.Length; i++) {
+        //    MyZhijia curZhijia = zhijias[i];
+        //    curZhijia.front.transform.localPosition += new Vector3(-moveSpeed * Time.deltaTime * (1), 0f, 0f);
+        //}
 
         if (Input.GetKeyDown(KeyCode.Space)) {
             // 处理邻居刮板和推移连杆

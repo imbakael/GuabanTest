@@ -153,14 +153,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   zhijias:
-  - {fileID: 1781104418}
-  - {fileID: 1247492956}
   - {fileID: 663982492}
+  - {fileID: 1247492956}
+  - {fileID: 1781104418}
   maxGuabanAngle: 1
-  maxLianjietouAngle: 3
+  maxLianjietouAngle: 5
   maxTuiganAngle: 3
   yalingxiaoLength: 0.00873
   SqrYalingxiaoLength: 0
+  moveSpeed: 0.01
 --- !u!4 &482203577
 Transform:
   m_ObjectHideFlags: 0
@@ -288,9 +289,17 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 5558225907133386177, guid: ed132f208c64f4f48ad2f99f4ec7ebad, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.8
+      objectReference: {fileID: 0}
     - target: {fileID: 5558225907867816341, guid: ed132f208c64f4f48ad2f99f4ec7ebad, type: 3}
       propertyPath: useTop
-      value: 1
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5558225907867816341, guid: ed132f208c64f4f48ad2f99f4ec7ebad, type: 3}
+      propertyPath: isActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5558225907867816341, guid: ed132f208c64f4f48ad2f99f4ec7ebad, type: 3}
       propertyPath: activeZhijia
@@ -452,10 +461,22 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 5558225907133386177, guid: ed132f208c64f4f48ad2f99f4ec7ebad, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 5558225907867816341, guid: ed132f208c64f4f48ad2f99f4ec7ebad, type: 3}
+      propertyPath: useTop
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5558225907867816341, guid: ed132f208c64f4f48ad2f99f4ec7ebad, type: 3}
       propertyPath: isActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5558225907867816341, guid: ed132f208c64f4f48ad2f99f4ec7ebad, type: 3}
+      propertyPath: activeZhijia
+      value: 
+      objectReference: {fileID: 1247492956}
     - target: {fileID: 5558225907867816346, guid: ed132f208c64f4f48ad2f99f4ec7ebad, type: 3}
       propertyPath: m_RootOrder
       value: 3
@@ -524,10 +545,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 5558225907133386177, guid: ed132f208c64f4f48ad2f99f4ec7ebad, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 5558225907867816341, guid: ed132f208c64f4f48ad2f99f4ec7ebad, type: 3}
+      propertyPath: isActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5558225907867816341, guid: ed132f208c64f4f48ad2f99f4ec7ebad, type: 3}
       propertyPath: activeZhijia
       value: 
-      objectReference: {fileID: 1781104418}
+      objectReference: {fileID: 0}
     - target: {fileID: 5558225907867816346, guid: ed132f208c64f4f48ad2f99f4ec7ebad, type: 3}
       propertyPath: m_RootOrder
       value: 4
