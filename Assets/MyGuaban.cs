@@ -1,4 +1,4 @@
-using Sirenix.OdinInspector;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -72,6 +72,9 @@ public class MyGuaban : MonoBehaviour {
         int fristCount = 0;
         int secondCount = 0;
 
+        Quaternion originSelfRot = transform.localRotation;
+        Quaternion originLianjietouRot = Lianjietou.localRotation;
+
         float minDistance = float.MaxValue;
         Quaternion targetRotation = Quaternion.identity;
         Quaternion targetLianjietouRotation = Quaternion.identity;
@@ -82,7 +85,8 @@ public class MyGuaban : MonoBehaviour {
             while (NormalizeAngle(Lianjietou.localEulerAngles.y) <= MyManager.Instance.maxLianjietouAngle) {
                 fristCount++;
                 float distance = (self.position - neighbor.position).sqrMagnitude;
-                if (distance < minDistance) {
+                if (distance < minDistance && !JL.IsSegmentIntersectingRectangle(neighborTop, neighborBottom, 
+                    GetCorner(CornerDirection.左上), GetCorner(CornerDirection.右上), GetCorner(CornerDirection.右下), GetCorner(CornerDirection.左下))) {
                     minDistance = distance;
                     targetRotation = transform.localRotation;
                     targetLianjietouRotation = Lianjietou.localRotation;
@@ -109,7 +113,8 @@ public class MyGuaban : MonoBehaviour {
             while (NormalizeAngle(Lianjietou.localEulerAngles.y) <= lianjietouMaxAngle) {
                 secondCount++;
                 float distance = (self.position - neighbor.position).sqrMagnitude;
-                if (distance < minDistance) {
+                if (distance < minDistance && !JL.IsSegmentIntersectingRectangle(neighborTop, neighborBottom,
+                    GetCorner(CornerDirection.左上), GetCorner(CornerDirection.右上), GetCorner(CornerDirection.右下), GetCorner(CornerDirection.左下))) {
                     minDistance = distance;
                     targetRotation = transform.localRotation;
                     targetLianjietouRotation = Lianjietou.localRotation;
@@ -122,20 +127,30 @@ public class MyGuaban : MonoBehaviour {
         transform.localRotation = targetRotation;
         Lianjietou.localRotation = targetLianjietouRotation;
 
-        //Debug.Log("计算后距离 = " + (self.position - neighbor.position).sqrMagnitude);
+        bool isInter = JL.IsSegmentIntersectingRectangle(neighborTop, neighborBottom,
+                    GetCorner(CornerDirection.左上), GetCorner(CornerDirection.右上), GetCorner(CornerDirection.右下), GetCorner(CornerDirection.左下));
+        if (isInter) {
+            Debug.LogError($"{GetComponentInParent<MyZhijia>().name} 发生相交");
+            transform.localRotation = originSelfRot;
+            Lianjietou.localRotation = originLianjietouRot;
+        }
+
         Debug.Log($"{GetComponentInParent<MyZhijia>().name} 循环次数：{fristCount} / {secondCount}, " +
             $"刮板：{NormalizeAngle(transform.localEulerAngles.y)}, 连接头：{NormalizeAngle(Lianjietou.localEulerAngles.y)}");
 
-        Vector3 originPos = front.transform.localPosition;
+        //if (GetComponentInParent<MyZhijia>().name == "右2支架") {
+        //    Vector3 originPos = front.transform.localPosition;
 
-        float t = 0f;
-        while ((self.position - neighbor.position).sqrMagnitude > MyManager.Instance.SqrYalingxiaoLength) {
-            t += 0.01f;
-            front.transform.localPosition = Vector3.Lerp(originPos, activeNeighbor.front.transform.localPosition, t);
-            if (t >= 1f) {
-                break;
-            }
-        }
+        //    float t = 0f;
+        //    while ((self.position - neighbor.position).sqrMagnitude > MyManager.Instance.SqrYalingxiaoLength) {
+        //        t += 0.01f;
+        //        front.transform.localPosition = Vector3.Lerp(originPos, activeNeighbor.front.transform.localPosition, t);
+        //        if (t >= 1f) {
+        //            break;
+        //        }
+        //    }
+        //}
+        
 
     }
 
@@ -146,4 +161,6 @@ public class MyGuaban : MonoBehaviour {
 
         return angle;
     }
+
+    
 }
