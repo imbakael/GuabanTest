@@ -67,21 +67,26 @@ public class MyGuaban : MonoBehaviour {
         Transform neighbor = useTop ? neighborTop : neighborBottom;
         Transform self = useTop ? selfTop : selfBottom;
 
-        HandleRotate(neighborTop, neighborBottom, neighbor, self);
+        int loopCount = 0;
+
+        HandleRotate(neighborTop, neighborBottom, neighbor, self, ref loopCount);
         Vector3 originPos = SelfZhijia.front.transform.localPosition;
         float t = 0f;
         while ((self.position - neighbor.position).sqrMagnitude > MyManager.Instance.SqrYalingxiaoLength) {
-            t += 0.01f;
+            t += 0.02f;
+            int innerLoop = 0;
             SelfZhijia.front.transform.localPosition = Vector3.Lerp(originPos, activeNeighbor.front.transform.localPosition, t);
-            HandleRotate(neighborTop, neighborBottom, neighbor, self);
+            HandleRotate(neighborTop, neighborBottom, neighbor, self, ref innerLoop);
+            loopCount += innerLoop;
             if (t >= 1f) {
                 break;
             }
         }
+        //Debug.Log($" {SelfZhijia.name} loopCount : {loopCount}");
 
     }
 
-    private void HandleRotate(Transform neighborTop, Transform neighborBottom, Transform neighbor, Transform self) {
+    private void HandleRotate(Transform neighborTop, Transform neighborBottom, Transform neighbor, Transform self, ref int loopCount) {
         int firstCount = 0;
         int secondCount = 0;
         float maxGuabanAngle = MyManager.Instance.maxGuabanAngle;
@@ -108,9 +113,11 @@ public class MyGuaban : MonoBehaviour {
             ref secondCount, ref minDistance, ref targetRotation, ref targetLianjietouRotation);
 
         //Debug.Log($"currentGuabanAngle : {currentGuabanAngle}, min : {selfMinAngle}, max : {selfMaxAngle}, currentLianjietouAngle : {currentLianjietouAngle}, min : {lianjietouMinAngle}, max : {lianjietouMaxAngle}");
-        transform.localRotation = targetRotation;
-        Lianjietou.localRotation = targetLianjietouRotation;
+        
+        transform.localRotation = Quaternion.Euler(new Vector3(0, Mathf.Clamp(NormalizeAngle(targetRotation.eulerAngles.y), -maxGuabanAngle, maxGuabanAngle) ,0));
+        Lianjietou.localRotation = Quaternion.Euler(new Vector3(0, Mathf.Clamp(NormalizeAngle(targetLianjietouRotation.eulerAngles.y), -maxLianjietouAngle, maxLianjietouAngle), 0));
 
+        loopCount = firstCount + secondCount;
         //Debug.Log($"{SelfZhijia.name} 循环次数：{firstCount} / {secondCount}, " +
         //    $"刮板：{NormalizeAngle(transform.localEulerAngles.y)}, 连接头：{NormalizeAngle(Lianjietou.localEulerAngles.y)}");
     }
