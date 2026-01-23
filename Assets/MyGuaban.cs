@@ -74,6 +74,9 @@ public class MyGuaban : MonoBehaviour {
             t += 0.01f;
             SelfZhijia.front.transform.localPosition = Vector3.Lerp(originPos, activeNeighbor.front.transform.localPosition, t);
             HandleRotate(neighborTop, neighborBottom, neighbor, self);
+            if (t >= 1f) {
+                break;
+            }
         }
 
     }
