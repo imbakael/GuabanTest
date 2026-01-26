@@ -56,7 +56,7 @@ GameObject:
   m_Layer: 0
   m_Name: "\u53F3\u4E0A"
   m_TagString: Untagged
-  m_Icon: {fileID: 7174288486110832750, guid: 0000000000000000d000000000000000, type: 0}
+  m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -87,7 +87,7 @@ GameObject:
   m_Layer: 0
   m_Name: "\u5DE6\u4E0B"
   m_TagString: Untagged
-  m_Icon: {fileID: -5397416234189338067, guid: 0000000000000000d000000000000000, type: 0}
+  m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -575,6 +575,8 @@ MonoBehaviour:
   liangan: {fileID: 5558225907153322419}
   isActive: 0
   front: {fileID: 6810273496886655088}
+  leftZhijia: {fileID: 0}
+  rightZhijia: {fileID: 0}
   activeZhijia: {fileID: 0}
   useTop: 0
 --- !u!1 &5701662676967587593
@@ -589,7 +591,7 @@ GameObject:
   m_Layer: 0
   m_Name: "\u53F3\u4E0B"
   m_TagString: Untagged
-  m_Icon: {fileID: 6519382022992737161, guid: 0000000000000000d000000000000000, type: 0}
+  m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -621,7 +623,7 @@ GameObject:
   m_Layer: 0
   m_Name: "\u4E2D\u90E8\u69FD\u5E95\u90E8\u4E2D\u5FC3\u70B9"
   m_TagString: Untagged
-  m_Icon: {fileID: 3443629218296621865, guid: 0000000000000000d000000000000000, type: 0}
+  m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -658,12 +660,9 @@ MonoBehaviour:
   - {fileID: 1853986732917136449}
   - {fileID: 3841550014155644318}
   - {fileID: 1842932824874753826}
-  leftZhijia: {fileID: 0}
-  rightZhijia: {fileID: 0}
   center: {fileID: 8934292915586307136}
   bottomLink: {fileID: 2475273398183460987}
   liangan: {fileID: 5558225907153322419}
-  front: {fileID: 6810273496886655088}
 --- !u!1 &6660514312766773523
 GameObject:
   m_ObjectHideFlags: 0
@@ -773,7 +772,7 @@ GameObject:
   m_Layer: 0
   m_Name: "\u5DE6\u4E0A"
   m_TagString: Untagged
-  m_Icon: {fileID: -5487077368411116049, guid: 0000000000000000d000000000000000, type: 0}
+  m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -804,7 +803,7 @@ GameObject:
   m_Layer: 0
   m_Name: "\u8FDE\u63A5\u5934"
   m_TagString: Untagged
-  m_Icon: {fileID: 7866945982896999795, guid: 0000000000000000d000000000000000, type: 0}
+  m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
