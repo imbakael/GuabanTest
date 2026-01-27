@@ -1,14 +1,17 @@
+using Sirenix.OdinInspector;
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
 using UnityEngine;
+using static UnityEngine.GraphicsBuffer;
 
 
 public class JL : MonoBehaviour {
 
     public Transform a;
     public Transform b;
+    public Transform c;
+    public float degree;
 
     public Transform leftTop;
     public Transform rightTop;
@@ -19,21 +22,43 @@ public class JL : MonoBehaviour {
 
     private void Update() {
         if (Input.GetKeyDown(KeyCode.Space)) {
-            UnityEngine.Debug.Log($"是否相交：{IsSegmentIntersectingRectangle(a, b, leftTop, rightTop, rightBottom, leftBottom)}");
+            Vector3 cb = b.position - c.position;
 
-            //Vector2[] rectVertices = new Vector2[] { GetVector2(leftTop), GetVector2(rightTop), GetVector2(rightBottom), GetVector2(leftBottom) };
-            //Vector2 segStart = GetVector2(leftTop);
-            //Vector2 segEnd = GetVector2(rightTop);
-            //Stopwatch stopwatch = new Stopwatch();
-            //stopwatch.Start();
-            //for (int i = 0; i < count; i++) {
-            //    //IsSegmentIntersectingRectangle(a, b, leftTop, rightTop, rightBottom, leftBottom);
-            //    IsSegmentIntersectingRectangle(segStart, segEnd, rectVertices);
-            //}
-            //stopwatch.Stop();
-            //TimeSpan elapsedTime = stopwatch.Elapsed;
-            //UnityEngine.Debug.Log($"代码执行时间: {elapsedTime.TotalMilliseconds} 毫秒");
+            Vector3 newdirection = Quaternion.AngleAxis(degree, Vector3.up) * cb;
+
+            float distanceBC = Vector3.Distance(b.position, c.position);
+
+            b.position = c.position + newdirection.normalized * distanceBC;
+            //b.localRotation = Quaternion.LookRotation(c.position - b.position);
         }
+    }
+
+    [Button("look at")]
+    public void LookAt() {
+        Vector3 from = b.forward;
+
+        Vector3 to = c.position - b.position;
+
+        Vector3 normalAxis = b.up;
+
+        Vector3 modifyTo = to - Vector3.Project(to, normalAxis);
+
+        float angle = Vector3.SignedAngle(from, modifyTo, normalAxis);
+
+        if (Mathf.Abs(angle) > Mathf.Epsilon) {
+            
+            b.localRotation *= Quaternion.AngleAxis(angle, Vector3.up);
+        }
+    }
+
+    public static Vector3 RotateVectorAroundPoint(Vector3 vector, Vector3 pivot, float degrees) {
+        // 这里假设向量的起点是原点，终点是vector
+        // 实际上，这个函数旋转的是从原点到vector点的向量
+        Quaternion rotation = Quaternion.Euler(0f, 0f, degrees);
+        Vector3 rotatedVector = rotation * vector;
+
+        // 注意：这个版本不考虑向量的实际起点，只是旋转向量本身
+        return rotatedVector;
     }
 
     /// <summary>

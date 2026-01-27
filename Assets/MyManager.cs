@@ -31,6 +31,7 @@ public class MyManager : MonoBehaviour {
 
     public float yalingxiaoLength = 0.05f;
     public float SqrYalingxiaoLength;
+    public float width = 0.5f;
 
     public static MyManager Instance;
 
@@ -38,6 +39,7 @@ public class MyManager : MonoBehaviour {
 
     private void Start() {
         Instance = this;
+        yalingxiaoLength = Mathf.PI / 180 * width * maxGuabanAngle;
         SqrYalingxiaoLength = yalingxiaoLength * yalingxiaoLength;
         for (int i = 0; i < zhijias.Length; i++) {
             MyZhijia curZhijia = zhijias[i];

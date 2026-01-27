@@ -38,15 +38,17 @@ public class MyGuaban : MonoBehaviour {
         }
     }
 
-    private Transform selfFront;
-    public Transform SelfFront {
+    private MyFront selfFront;
+    public MyFront SelfFront {
         get {
             if (selfFront == null) {
-                selfFront = SelfZhijia.front.transform;
+                selfFront = SelfZhijia.front;
             }
             return selfFront;
         }
     }
+
+    public float CurrentGuabanAngle => NormalizeAngle(transform.localEulerAngles.y);
 
     public List<Transform> gizmoTrans = new List<Transform>();
 
@@ -115,23 +117,26 @@ public class MyGuaban : MonoBehaviour {
     }
 
     private void HandleRotate(Transform neighborTop, Transform neighborBottom, Transform neighbor, Transform self, ref int loopCount, ref float minDistance) {
+        //float minGuabanAngle = Mathf.Clamp(activeNeighbor.guaban.CurrentGuabanAngle - 1f, -MyManager.Instance.maxGuabanAngle, MyManager.Instance.maxGuabanAngle);
+        //float maxGuabanAngle = Mathf.Clamp(activeNeighbor.guaban.CurrentGuabanAngle + 1f, -MyManager.Instance.maxGuabanAngle, MyManager.Instance.maxGuabanAngle);
+        float minGuabanAngle = -MyManager.Instance.maxGuabanAngle;
         float maxGuabanAngle = MyManager.Instance.maxGuabanAngle;
         float maxLianjietouAngle = MyManager.Instance.maxLianjietouAngle;
         float maxTuiganAngle = MyManager.Instance.maxTuiganAngle;
 
-        Quaternion targetRotation = Quaternion.identity;
+        Quaternion targetRotation = Quaternion.Euler(0, (minGuabanAngle + maxGuabanAngle) / 2, 0);
         Quaternion targetLianjietouRotation = Quaternion.identity;
         Quaternion targetTuiganRotation = Quaternion.identity;
 
         CalcRotate(neighborTop, neighborBottom, neighbor, self,
-            -maxGuabanAngle, maxGuabanAngle, -maxLianjietouAngle, maxLianjietouAngle, -maxTuiganAngle, maxTuiganAngle, 1f,
+            minGuabanAngle, maxGuabanAngle, -maxLianjietouAngle, maxLianjietouAngle, -maxTuiganAngle, maxTuiganAngle, 1f,
             ref loopCount, ref minDistance, ref targetRotation, ref targetLianjietouRotation, ref targetTuiganRotation);
 
         float delta = 0.5f;
 
         float currentGuabanAngle = NormalizeAngle(targetRotation.eulerAngles.y);
-        float selfMinAngle = Mathf.Clamp(currentGuabanAngle - delta, -maxGuabanAngle, maxGuabanAngle);
-        float selfMaxAngle = Mathf.Clamp(currentGuabanAngle + delta, -maxGuabanAngle, maxGuabanAngle);
+        float selfMinAngle = Mathf.Clamp(currentGuabanAngle - delta, minGuabanAngle, maxGuabanAngle);
+        float selfMaxAngle = Mathf.Clamp(currentGuabanAngle + delta, minGuabanAngle, maxGuabanAngle);
 
         float currentLianjietouAngle = NormalizeAngle(targetLianjietouRotation.eulerAngles.y);
         float lianjietouMinAngle = Mathf.Clamp(currentLianjietouAngle - delta, -maxLianjietouAngle, maxLianjietouAngle);
@@ -146,9 +151,11 @@ public class MyGuaban : MonoBehaviour {
             ref loopCount, ref minDistance, ref targetRotation, ref targetLianjietouRotation, ref targetTuiganRotation);
         //Debug.Log($"2 {SelfZhijia.name} currentGuabanAngle : {currentGuabanAngle}, min : {selfMinAngle}, max : {selfMaxAngle}, currentLianjietouAngle : {currentLianjietouAngle}, min : {lianjietouMinAngle}, max : {lianjietouMaxAngle}");
 
-        transform.localRotation = Quaternion.Euler(0, Mathf.Clamp(NormalizeAngle(targetRotation.eulerAngles.y), -maxGuabanAngle, maxGuabanAngle), 0);
+        transform.localRotation = Quaternion.Euler(0, Mathf.Clamp(NormalizeAngle(targetRotation.eulerAngles.y), minGuabanAngle, maxGuabanAngle), 0);
         Lianjietou.localRotation = Quaternion.Euler(0, Mathf.Clamp(NormalizeAngle(targetLianjietouRotation.eulerAngles.y), -maxLianjietouAngle, maxLianjietouAngle), 0);
-        SelfFront.localRotation = Quaternion.Euler(0, Mathf.Clamp(NormalizeAngle(targetTuiganRotation.eulerAngles.y), -maxTuiganAngle, maxTuiganAngle), 0);
+
+        //SelfFront.localRotation = Quaternion.Euler(0, Mathf.Clamp(NormalizeAngle(targetTuiganRotation.eulerAngles.y), -maxTuiganAngle, maxTuiganAngle), 0);
+        SelfFront.MoveOnlyWithAngle(Mathf.Clamp(NormalizeAngle(targetTuiganRotation.eulerAngles.y), -maxTuiganAngle, maxTuiganAngle));
 
         //Debug.Log($"{SelfZhijia.name} 循环次数：{loopCount}, " +
         //    $"刮板：{NormalizeAngle(transform.localEulerAngles.y)}, 连接头：{NormalizeAngle(Lianjietou.localEulerAngles.y)}, 推杆：{NormalizeAngle(targetTuiganRotation.eulerAngles.y)}");
@@ -163,8 +170,8 @@ public class MyGuaban : MonoBehaviour {
         ref int loopCount, ref float minDistance, ref Quaternion targetRotation, ref Quaternion targetLianjietouRotation, ref Quaternion targetTuiganRotation, float epsilon = 0.0001f) {
 
         int i = 0;
-        SelfFront.localRotation = Quaternion.Euler(0, (tuiganMinAngle + tuiganMaxAngle) / 2, 0);
-        while (NormalizeAngle(SelfFront.localEulerAngles.y) <= tuiganMaxAngle + epsilon) {
+        SelfFront.MoveOnlyWithAngle((tuiganMinAngle + tuiganMaxAngle) / 2);
+        while (SelfFront.Angle <= tuiganMaxAngle + epsilon) {
             int j = 0;
             Lianjietou.localRotation = Quaternion.Euler(0, (lianjietouMinAngle + lianjietouMaxAngle) / 2, 0);
             while (NormalizeAngle(Lianjietou.localEulerAngles.y) <= lianjietouMaxAngle + epsilon) {
@@ -177,7 +184,7 @@ public class MyGuaban : MonoBehaviour {
                         minDistance = distance;
                         targetRotation = transform.localRotation;
                         targetLianjietouRotation = Lianjietou.localRotation;
-                        targetTuiganRotation = SelfFront.localRotation;
+                        targetTuiganRotation = SelfFront.transform.localRotation;
                         if (minDistance < 0.0001f) {
                             return;
                         }
@@ -189,7 +196,7 @@ public class MyGuaban : MonoBehaviour {
                 Lianjietou.localRotation = Quaternion.Euler(0, angleDelta * GetOffset(j), 0);
             }
             i++;
-            SelfFront.localRotation = Quaternion.Euler(0, angleDelta * GetOffset(i), 0);
+            SelfFront.MoveOnlyWithAngle(angleDelta * GetOffset(i));
         }
     }
 
