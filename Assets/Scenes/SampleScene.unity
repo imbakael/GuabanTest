@@ -153,13 +153,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   zhijias:
-  - {fileID: 2009096810}
   - {fileID: 663982492}
   - {fileID: 1247492956}
   - {fileID: 1781104418}
   maxGuabanAngle: 1
-  maxLianjietouAngle: 3
-  maxTuiganAngle: 2
+  maxLianjietouAngle: 1
+  maxTuiganAngle: 1
   yalingxiaoLength: 0.0087266
   SqrYalingxiaoLength: 0
   moveSpeed: 0.01
@@ -681,18 +680,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5558225907867816347, guid: ed132f208c64f4f48ad2f99f4ec7ebad, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ed132f208c64f4f48ad2f99f4ec7ebad, type: 3}
---- !u!114 &2009096810 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 5558225907867816341, guid: ed132f208c64f4f48ad2f99f4ec7ebad, type: 3}
-  m_PrefabInstance: {fileID: 2009096809}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 95cfee61e9e2caf4e8014cf0433a984b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 

@@ -178,37 +178,23 @@ public class MyGuaban : MonoBehaviour {
                         targetRotation = transform.localRotation;
                         targetLianjietouRotation = Lianjietou.localRotation;
                         targetTuiganRotation = SelfFront.localRotation;
+                        if (minDistance < 0.0001f) {
+                            return;
+                        }
                     }
                     k++;
-                    transform.localRotation = Quaternion.Euler(0, angleDelta * (k % 2 == 0 ? -k / 2 : (k + 1) / 2), 0);
+                    transform.localRotation = Quaternion.Euler(0, angleDelta * GetOffset(k), 0);
                 }
                 j++;
-                Lianjietou.localRotation = Quaternion.Euler(0, angleDelta * (j % 2 == 0 ? -j / 2 : (j + 1) / 2), 0);
+                Lianjietou.localRotation = Quaternion.Euler(0, angleDelta * GetOffset(j), 0);
             }
             i++;
-            SelfFront.localRotation = Quaternion.Euler(0, angleDelta * (i % 2 == 0 ? -i / 2 : (i + 1) / 2), 0);
+            SelfFront.localRotation = Quaternion.Euler(0, angleDelta * GetOffset(i), 0);
         }
+    }
 
-        //transform.localRotation = Quaternion.AngleAxis(guabanMinAngle, Vector3.up);
-        //while (NormalizeAngle(transform.localEulerAngles.y) <= guabanMaxAngle + epsilon) {
-        //    Lianjietou.localRotation = Quaternion.AngleAxis(lianjietouMinAngle, Vector3.up);
-        //    while (NormalizeAngle(Lianjietou.localEulerAngles.y) <= lianjietouMaxAngle + epsilon) {
-        //        loopCount++;
-        //        float distance = (self.position - neighbor.position).sqrMagnitude;
-        //        if (distance < minDistance && !JL.IsSegmentIntersectingRectangle(neighborTop, neighborBottom,
-        //            GetCorner(CornerDirection.左上), GetCorner(CornerDirection.右上), GetCorner(CornerDirection.右下), GetCorner(CornerDirection.左下))) {
-
-        //            minDistance = distance;
-        //            targetRotation = transform.localRotation;
-        //            targetLianjietouRotation = Lianjietou.localRotation;
-        //            //if (minDistance < MyManager.Instance.SqrYalingxiaoLength) {
-        //            //    return;
-        //            //}
-        //        }
-        //        Lianjietou.localRotation *= Quaternion.AngleAxis(angleDelta, Vector3.up);
-        //    }
-        //    transform.localRotation *= Quaternion.AngleAxis(angleDelta, Vector3.up);
-        //}
+    private int GetOffset(int index) {
+        return index % 2 == 0 ? (-index / 2) : ((index + 1) / 2);
     }
 
     private float NormalizeAngle(float angle) {
