@@ -112,7 +112,7 @@ public class MyGuaban : MonoBehaviour {
         //        break;
         //    }
         //}
-        Debug.Log($" {SelfZhijia.name} loopCount : {loopCount}");
+        //Debug.Log($" {SelfZhijia.name} loopCount : {loopCount}");
 
     }
 
@@ -157,8 +157,8 @@ public class MyGuaban : MonoBehaviour {
         //SelfFront.localRotation = Quaternion.Euler(0, Mathf.Clamp(NormalizeAngle(targetTuiganRotation.eulerAngles.y), -maxTuiganAngle, maxTuiganAngle), 0);
         SelfFront.MoveOnlyWithAngle(Mathf.Clamp(NormalizeAngle(targetTuiganRotation.eulerAngles.y), -maxTuiganAngle, maxTuiganAngle));
 
-        //Debug.Log($"{SelfZhijia.name} 循环次数：{loopCount}, " +
-        //    $"刮板：{NormalizeAngle(transform.localEulerAngles.y)}, 连接头：{NormalizeAngle(Lianjietou.localEulerAngles.y)}, 推杆：{NormalizeAngle(targetTuiganRotation.eulerAngles.y)}");
+        Debug.Log($"{SelfZhijia.name} 循环次数：{loopCount}, " +
+            $"刮板：{NormalizeAngle(transform.localEulerAngles.y)}, 连接头：{NormalizeAngle(Lianjietou.localEulerAngles.y)}, 推杆：{NormalizeAngle(targetTuiganRotation.eulerAngles.y)}");
     }
 
     /// <summary>
@@ -185,9 +185,9 @@ public class MyGuaban : MonoBehaviour {
                         targetRotation = transform.localRotation;
                         targetLianjietouRotation = Lianjietou.localRotation;
                         targetTuiganRotation = SelfFront.transform.localRotation;
-                        if (minDistance < 0.0001f) {
-                            return;
-                        }
+                        //if (minDistance < 0.0001f) {
+                        //    return;
+                        //}
                     }
                     k++;
                     transform.localRotation = Quaternion.Euler(0, angleDelta * GetOffset(k), 0);

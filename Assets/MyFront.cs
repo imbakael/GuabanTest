@@ -11,10 +11,12 @@ public class MyFront : MonoBehaviour {
 
     public float Angle => NormalizeAngle(transform.localEulerAngles.y);
 
+    public bool isRotatePoint; // false表示绕自身旋转，true表示绕point旋转
+
     private Vector3 originPosition;
     private float curRelativeDistance;
 
-    private void Awake() {
+    private void Start() {
         if (transform.hasChanged) {
             transform.hasChanged = false;
         }
@@ -24,6 +26,10 @@ public class MyFront : MonoBehaviour {
     }
 
     public void MoveOnlyWithAngle(float angle) {
+        if (!isRotatePoint) {
+            transform.localRotation = Quaternion.Euler(0, angle, 0);
+            return;
+        }
         transform.position = originPosition;
         transform.localRotation = Quaternion.identity;
         Vector3 direction = transform.position - point.position;

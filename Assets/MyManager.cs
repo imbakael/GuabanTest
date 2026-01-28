@@ -37,7 +37,7 @@ public class MyManager : MonoBehaviour {
 
     public float moveSpeed = 0.1f;
 
-    private void Start() {
+    private void Awake() {
         Instance = this;
         yalingxiaoLength = Mathf.PI / 180 * width * maxGuabanAngle;
         SqrYalingxiaoLength = yalingxiaoLength * yalingxiaoLength;
@@ -46,8 +46,11 @@ public class MyManager : MonoBehaviour {
             MyZhijia leftZhijia = i - 1 >= 0 ? zhijias[i - 1] : null;
             MyZhijia rightZhijia = i + 1 < zhijias.Length ? zhijias[i + 1] : null;
             curZhijia.SetZhijia(leftZhijia, rightZhijia);
+            curZhijia.transform.position = new Vector3(0, 0, i * (yalingxiaoLength + 1));
         }
     }
+
+    bool mark = false;
 
     private void Update() {
         // 存在异常角点时
@@ -56,6 +59,14 @@ public class MyManager : MonoBehaviour {
         //    // 2.若中部槽旋转仍有异常点，则推移连杆向前移动Δd距离(需保证已经到最大行程的推移连杆不动，S弯区段的推移连杆才能动)
 
 
+        //}
+        
+        //if (Input.GetKeyDown(KeyCode.Space)) {
+        //    mark = true;
+        //}
+
+        //if (!mark) {
+        //    return;
         //}
 
         if (zhijias.Any(t => t.front.transform.hasChanged)) {
