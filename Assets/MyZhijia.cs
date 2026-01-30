@@ -6,7 +6,6 @@ using UnityEngine;
 public class MyZhijia : MonoBehaviour {
 
     public MyGuaban guaban;
-    public MyLiangan liangan;
     public bool isActive;
     public MyFront front;
 

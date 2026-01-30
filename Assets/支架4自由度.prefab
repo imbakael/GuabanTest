@@ -274,6 +274,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   point: {fileID: 5875155900738624051}
   originDistance: 0
+  isRotatePoint: 0
+  tuiyixingcheng: 0
 --- !u!1 &5558225907153322417
 GameObject:
   m_ObjectHideFlags: 0
@@ -283,7 +285,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5558225907153322416}
-  - component: {fileID: 5558225907153322419}
   m_Layer: 0
   m_Name: "\u63A8\u79FB\u8FDE\u6746\u57FA\u51C6\u70B9"
   m_TagString: Untagged
@@ -307,18 +308,6 @@ Transform:
   m_Father: {fileID: 5558225907133386177}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &5558225907153322419
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5558225907153322417}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 43c5fc115b76c564e9e0a6d223473dcc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &5558225907279042600
 GameObject:
   m_ObjectHideFlags: 0
@@ -561,7 +550,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   guaban: {fileID: 9020729180649578730}
-  liangan: {fileID: 5558225907153322419}
+  liangan: {fileID: 0}
   isActive: 0
   front: {fileID: 6810273496886655088}
   leftZhijia: {fileID: 0}
@@ -651,7 +640,7 @@ MonoBehaviour:
   - {fileID: 1842932824874753826}
   center: {fileID: 8934292915586307136}
   bottomLink: {fileID: 2475273398183460987}
-  liangan: {fileID: 5558225907153322419}
+  liangan: {fileID: 0}
   gizmoTrans: []
 --- !u!1 &6660514312766773523
 GameObject:

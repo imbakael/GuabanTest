@@ -8,57 +8,34 @@ using static UnityEngine.GraphicsBuffer;
 
 public class JL : MonoBehaviour {
 
-    public Transform a;
-    public Transform b;
-    public Transform c;
-    public float degree;
+    public Transform[] corners;
 
-    public Transform leftTop;
-    public Transform rightTop;
-    public Transform rightBottom;
-    public Transform leftBottom;
-
-    public int count;
+    public Transform wholePoint;
+    public Transform headPoint;
+    public Transform middlePoint;
 
     private void Update() {
         if (Input.GetKeyDown(KeyCode.Space)) {
-            Vector3 cb = b.position - c.position;
-
-            Vector3 newdirection = Quaternion.AngleAxis(degree, Vector3.up) * cb;
-
-            float distanceBC = Vector3.Distance(b.position, c.position);
-
-            b.position = c.position + newdirection.normalized * distanceBC;
-            //b.localRotation = Quaternion.LookRotation(c.position - b.position);
+            for (int i = 0; i < corners.Length; i++) {
+                Vector3 one = corners[i].position;
+                Vector3 other = corners[(i + 1) % corners.Length].position;
+                Debug.Log($"i {i}, distance : {Vector3.Distance(one, other)}, " +
+                    $" xzD : {Vector2.Distance(new Vector2(one.x, one.z), new Vector2(other.x, other.z))}, yD : {other.y - one.y}");
+            }
         }
     }
 
-    [Button("look at")]
-    public void LookAt() {
-        Vector3 from = b.forward;
-
-        Vector3 to = c.position - b.position;
-
-        Vector3 normalAxis = b.up;
-
-        Vector3 modifyTo = to - Vector3.Project(to, normalAxis);
-
-        float angle = Vector3.SignedAngle(from, modifyTo, normalAxis);
-
-        if (Mathf.Abs(angle) > Mathf.Epsilon) {
-            
-            b.localRotation *= Quaternion.AngleAxis(angle, Vector3.up);
+    private void OnDrawGizmos() {
+        Gizmos.color = Color.green;
+        for (int i = 0; i < corners.Length; i++) {
+            Vector3 one = corners[i].position;
+            Vector3 other = corners[(i + 1) % corners.Length].position;
+            Gizmos.DrawLine(one, other);
         }
-    }
-
-    public static Vector3 RotateVectorAroundPoint(Vector3 vector, Vector3 pivot, float degrees) {
-        // 这里假设向量的起点是原点，终点是vector
-        // 实际上，这个函数旋转的是从原点到vector点的向量
-        Quaternion rotation = Quaternion.Euler(0f, 0f, degrees);
-        Vector3 rotatedVector = rotation * vector;
-
-        // 注意：这个版本不考虑向量的实际起点，只是旋转向量本身
-        return rotatedVector;
+        Gizmos.color = Color.red;
+        Gizmos.DrawLine(middlePoint.position, headPoint.position);
+        Gizmos.color = Color.blue;
+        Gizmos.DrawLine(headPoint.position, wholePoint.position);
     }
 
     /// <summary>

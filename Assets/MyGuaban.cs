@@ -16,8 +16,6 @@ public class MyGuaban : MonoBehaviour {
     public Transform center;
     public Transform bottomLink;
 
-    public MyLiangan liangan;
-
     private Transform lianjietou;
     public Transform Lianjietou {
         get {

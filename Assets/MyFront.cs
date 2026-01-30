@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// 连接杆+中部槽
 public class MyFront : MonoBehaviour {
 
     public Transform point;
@@ -13,64 +14,27 @@ public class MyFront : MonoBehaviour {
 
     public bool isRotatePoint; // false表示绕自身旋转，true表示绕point旋转
 
-    private Vector3 originPosition;
-    private float curRelativeDistance;
+    public float tuiyixingcheng;
+    private Vector3 originDirection;
 
     private void Start() {
         if (transform.hasChanged) {
             transform.hasChanged = false;
         }
         originDistance = Vector3.Distance(point.position, transform.position);
-        originPosition = transform.position;
-        curRelativeDistance = 0f;
+        originDirection = transform.position - point.position;
+        tuiyixingcheng = 0f;
     }
 
+    [Button("旋转")]
     public void MoveOnlyWithAngle(float angle) {
+        Quaternion rotation = Quaternion.Euler(0, angle, 0);
+        transform.localRotation = rotation;
         if (!isRotatePoint) {
-            transform.localRotation = Quaternion.Euler(0, angle, 0);
             return;
         }
-        transform.position = originPosition;
-        transform.localRotation = Quaternion.identity;
-        Vector3 direction = transform.position - point.position;
-        Vector3 newdirection = Quaternion.AngleAxis(angle, Vector3.up) * direction;
-        transform.position = point.position + newdirection.normalized * (originDistance + curRelativeDistance);
-        LookAt();
-    }
-
-    [Button("只移动")]
-    public void MoveOnlyWithDeltaDistance(float deltaDistance) {
-        curRelativeDistance += deltaDistance;
-        Vector3 direction = transform.position - point.position;
-        Vector3 newdirection = Quaternion.AngleAxis(0, Vector3.up) * direction;
-        transform.position = point.position + newdirection.normalized * (originDistance + curRelativeDistance);
-        LookAt();
-    }
-
-    [Button("移动和旋转")]
-    public void Move(float degree = 0, float moveRelativeToOriginDistance = 0) {
-        curRelativeDistance = moveRelativeToOriginDistance;
-        transform.position = originPosition;
-        transform.localRotation = Quaternion.identity;
-        if (degree == 0 && moveRelativeToOriginDistance == 0) {
-            return;
-        }
-        Vector3 direction = transform.position - point.position;
-        Vector3 newdirection = Quaternion.AngleAxis(degree, Vector3.up) * direction;
-        transform.position = point.position + newdirection.normalized * (originDistance + moveRelativeToOriginDistance);
-        LookAt();
-    }
-
-    private void LookAt() {
-        Vector3 from = transform.right;
-        Vector3 to = point.position - transform.position;
-        Vector3 normalAxis = transform.up;
-        Vector3 modifyTo = to - Vector3.Project(to, normalAxis);
-        float angle = Vector3.SignedAngle(from, modifyTo, normalAxis);
-        if (Mathf.Abs(angle) > Mathf.Epsilon) {
-
-            transform.localRotation *= Quaternion.AngleAxis(angle, Vector3.up);
-        }
+        Vector3 nDirection = rotation * originDirection;
+        transform.position = point.position + nDirection.normalized * (originDistance + tuiyixingcheng);
     }
 
     private float NormalizeAngle(float angle) {
