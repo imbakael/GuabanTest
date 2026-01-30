@@ -15,14 +15,14 @@ public class JL : MonoBehaviour {
     public Transform middlePoint;
 
     private void Update() {
-        if (Input.GetKeyDown(KeyCode.Space)) {
-            for (int i = 0; i < corners.Length; i++) {
-                Vector3 one = corners[i].position;
-                Vector3 other = corners[(i + 1) % corners.Length].position;
-                Debug.Log($"i {i}, distance : {Vector3.Distance(one, other)}, " +
-                    $" xzD : {Vector2.Distance(new Vector2(one.x, one.z), new Vector2(other.x, other.z))}, yD : {other.y - one.y}");
-            }
-        }
+        //if (Input.GetKeyDown(KeyCode.Space)) {
+        //    for (int i = 0; i < corners.Length; i++) {
+        //        Vector3 one = corners[i].position;
+        //        Vector3 other = corners[(i + 1) % corners.Length].position;
+        //        Debug.Log($"i {i}, distance : {Vector3.Distance(one, other)}, " +
+        //            $" xzD : {Vector2.Distance(new Vector2(one.x, one.z), new Vector2(other.x, other.z))}, yD : {other.y - one.y}");
+        //    }
+        //}
     }
 
     private void OnDrawGizmos() {

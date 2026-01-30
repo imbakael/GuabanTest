@@ -54,14 +54,15 @@ public class MyGuaban : MonoBehaviour {
         return cornerPoints[(int)direction];
     }
 
-
     void OnDrawGizmos() {
         // 在物体位置绘制图标
         if (gizmoTrans.Count == 2) {
-            Gizmos.DrawIcon(gizmoTrans[0].position, "self.png", false);
-            Gizmos.DrawIcon(gizmoTrans[1].position, "neighbor.png", false);
+            //Gizmos.DrawIcon(gizmoTrans[0].position, "self.png", false);
+            //Gizmos.DrawIcon(gizmoTrans[1].position, "neighbor.png", false);
+            Gizmos.DrawSphere(gizmoTrans[0].position, 0.05f);
+            Gizmos.DrawWireSphere(gizmoTrans[1].position, 0.05f);
+
         }
-        
     }
 
     /// <summary>

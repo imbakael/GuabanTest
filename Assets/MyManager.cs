@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using UnityEngine;
+using static UnityEngine.UI.GridLayoutGroup;
 
 public class MyManager : MonoBehaviour {
 
@@ -23,7 +24,7 @@ public class MyManager : MonoBehaviour {
     public MyZhijia[] zhijias;
 
     [Header("刮板最大水平旋转角")]
-    public float maxGuabanAngle;
+    public float maxGuabanAngle; // 理论最大旋转角(不超过3°)，但是相邻两个中部槽由于物理限制，只能有最大1°的角度差
     [Header("连接头最大水平旋转角")]
     public float maxLianjietouAngle;
     [Header("推移连杆最大水平旋转角")]
@@ -35,11 +36,12 @@ public class MyManager : MonoBehaviour {
 
     public static MyManager Instance;
 
-    public float moveSpeed = 0.1f;
+    public Transform testOne;
+    public Transform testTwo;
 
     private void Awake() {
         Instance = this;
-        yalingxiaoLength = Mathf.PI / 180 * width * maxGuabanAngle;
+        //yalingxiaoLength = Mathf.PI / 180 * width * 1;
         SqrYalingxiaoLength = yalingxiaoLength * yalingxiaoLength;
         for (int i = 0; i < zhijias.Length; i++) {
             MyZhijia curZhijia = zhijias[i];
@@ -60,14 +62,12 @@ public class MyManager : MonoBehaviour {
 
 
         //}
-        
-        //if (Input.GetKeyDown(KeyCode.Space)) {
-        //    mark = true;
-        //}
-
-        //if (!mark) {
-        //    return;
-        //}
+        if (Input.GetKeyDown(KeyCode.Space)) {
+            Vector3 one = testOne.position;
+            Vector3 other = testTwo.position;
+            Debug.Log($"distance : {Vector3.Distance(one, other)}, " +
+                $" xzD : {Vector2.Distance(new Vector2(one.x, one.z), new Vector2(other.x, other.z))}, yD : {other.y - one.y}");
+        }
 
         if (zhijias.Any(t => t.front.transform.hasChanged)) {
             int startIndex = Array.FindIndex(zhijias, t => t.isActive);
@@ -89,10 +89,5 @@ public class MyManager : MonoBehaviour {
             }
         }
 
-    }
-
-    // 判断刮板是否存在异常角点
-    private bool ExistAbnormalCornerPoints() {
-        return false;
     }
 }
