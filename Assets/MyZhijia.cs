@@ -16,6 +16,10 @@ public class MyZhijia : MonoBehaviour {
     public MyZhijia activeZhijia;
     public bool useTop;
 
+    public Transform wholePoint;
+    public Transform headPoint;
+    public Transform middlePoint;
+
     public void SetZhijia(MyZhijia leftZhijia, MyZhijia rightZhijia) {
         this.leftZhijia = leftZhijia;
         this.rightZhijia = rightZhijia;
@@ -27,5 +31,12 @@ public class MyZhijia : MonoBehaviour {
         //    return;
         //}
         guaban.Refresh(activeZhijia, useTop);
+    }
+
+    private void OnDrawGizmos() {
+        Gizmos.color = Color.red;
+        Gizmos.DrawLine(middlePoint.position, headPoint.position);
+        Gizmos.color = Color.blue;
+        Gizmos.DrawLine(headPoint.position, wholePoint.position);
     }
 }

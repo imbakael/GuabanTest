@@ -144,7 +144,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 434885209595924219, guid: fa8e44fc437184641803fc7d6f71d863, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 1.713
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 434885209595924219, guid: fa8e44fc437184641803fc7d6f71d863, type: 3}
       propertyPath: m_LocalRotation.w
@@ -176,10 +176,25 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 955560713050985537, guid: fa8e44fc437184641803fc7d6f71d863, type: 3}
       propertyPath: m_Name
-      value: "\u4E07\u798F\u652F\u67B6 (1)"
+      value: "\u5DE61"
+      objectReference: {fileID: 0}
+    - target: {fileID: 4136324006174267919, guid: fa8e44fc437184641803fc7d6f71d863, type: 3}
+      propertyPath: isActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fa8e44fc437184641803fc7d6f71d863, type: 3}
+--- !u!114 &422613862 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4136324006174267919, guid: fa8e44fc437184641803fc7d6f71d863, type: 3}
+  m_PrefabInstance: {fileID: 422613861}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 95cfee61e9e2caf4e8014cf0433a984b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &942092831
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -189,7 +204,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 434885209595924219, guid: fa8e44fc437184641803fc7d6f71d863, type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 434885209595924219, guid: fa8e44fc437184641803fc7d6f71d863, type: 3}
       propertyPath: m_LocalPosition.x
@@ -201,7 +216,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 434885209595924219, guid: fa8e44fc437184641803fc7d6f71d863, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: -1.712
       objectReference: {fileID: 0}
     - target: {fileID: 434885209595924219, guid: fa8e44fc437184641803fc7d6f71d863, type: 3}
       propertyPath: m_LocalRotation.w
@@ -233,10 +248,25 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 955560713050985537, guid: fa8e44fc437184641803fc7d6f71d863, type: 3}
       propertyPath: m_Name
-      value: "\u4E07\u798F\u652F\u67B6"
+      value: "\u5DE62"
       objectReference: {fileID: 0}
+    - target: {fileID: 4136324006174267919, guid: fa8e44fc437184641803fc7d6f71d863, type: 3}
+      propertyPath: activeZhijia
+      value: 
+      objectReference: {fileID: 422613862}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fa8e44fc437184641803fc7d6f71d863, type: 3}
+--- !u!114 &942092832 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4136324006174267919, guid: fa8e44fc437184641803fc7d6f71d863, type: 3}
+  m_PrefabInstance: {fileID: 942092831}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 95cfee61e9e2caf4e8014cf0433a984b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1411664905
 GameObject:
   m_ObjectHideFlags: 0
@@ -350,16 +380,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc6f2d17f5b9ed24cb79304c1cbb51c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  zhijias: []
+  zhijias:
+  - {fileID: 422613862}
+  - {fileID: 942092832}
   maxGuabanAngle: 1
-  maxLianjietouAngle: 0
+  maxLianjietouAngle: 1
   maxTuiganAngle: 0
   yalingxiaoLength: 0.016
   SqrYalingxiaoLength: 0
+  length: 1.697
   width: 1.2619
-  moveSpeed: 0.1
-  testOne: {fileID: 0}
-  testTwo: {fileID: 0}
 --- !u!4 &1764066401
 Transform:
   m_ObjectHideFlags: 0
@@ -373,7 +403,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1850156943
 GameObject:

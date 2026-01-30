@@ -550,13 +550,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   guaban: {fileID: 9020729180649578730}
-  liangan: {fileID: 0}
   isActive: 0
   front: {fileID: 6810273496886655088}
   leftZhijia: {fileID: 0}
   rightZhijia: {fileID: 0}
   activeZhijia: {fileID: 0}
   useTop: 0
+  wholePoint: {fileID: 5558225907133386177}
+  headPoint: {fileID: 8074629078273626549}
+  middlePoint: {fileID: 2475273398183460987}
 --- !u!1 &5701662676967587593
 GameObject:
   m_ObjectHideFlags: 0
@@ -640,7 +642,6 @@ MonoBehaviour:
   - {fileID: 1842932824874753826}
   center: {fileID: 8934292915586307136}
   bottomLink: {fileID: 2475273398183460987}
-  liangan: {fileID: 0}
   gizmoTrans: []
 --- !u!1 &6660514312766773523
 GameObject:

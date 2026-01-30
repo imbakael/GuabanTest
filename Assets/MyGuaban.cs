@@ -63,6 +63,13 @@ public class MyGuaban : MonoBehaviour {
             Gizmos.DrawWireSphere(gizmoTrans[1].position, 0.05f);
 
         }
+
+        Gizmos.color = Color.green;
+        for (int i = 0; i < cornerPoints.Length; i++) {
+            Vector3 one = cornerPoints[i].position;
+            Vector3 other = cornerPoints[(i + 1) % cornerPoints.Length].position;
+            Gizmos.DrawLine(one, other);
+        }
     }
 
     /// <summary>
