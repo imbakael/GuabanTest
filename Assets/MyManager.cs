@@ -1,3 +1,4 @@
+using Sirenix.OdinInspector;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -13,7 +14,7 @@ public class MyManager : MonoBehaviour {
     /* 
      * 中部槽之间的规律：
      * 1.必须满足左右分别有一个corner与左右邻居中部槽的一个corner重合
-     * 2.运动方式只有3种：中部槽绕自身底部中心旋转、推移连杆向正前方移动、推移连杆的左右摇摆
+     * 2.运动方式只有4种：中部槽绕自身底部中心旋转、连接头转动、推移连杆向正前方移动、推移连杆的左右摇摆
      * 3.中部槽旋转角度不超过3°
      * 4.只有一个主动件，剩余件的中部槽中心特征点低于主动件
      * 5.满足形变的传导，即主动件运动后，最靠近主动件的中部槽A进行运动+旋转，完事后下一个B槽在基于A的位置进行运动+旋转，直至某个槽N不需要旋转
@@ -47,6 +48,20 @@ public class MyManager : MonoBehaviour {
             MyZhijia rightZhijia = i + 1 < zhijias.Length ? zhijias[i + 1] : null;
             curZhijia.SetZhijia(leftZhijia, rightZhijia);
             curZhijia.transform.position = new Vector3(0, 0, i * (-yalingxiaoLength - length));
+        }
+    }
+
+    [Button("显示所有模型")]
+    public void ShowAllModel() {
+        foreach (MyZhijia item in zhijias) {
+            item.ShowOrHideModel(true);
+        }
+    }
+
+    [Button("隐藏所有模型")]
+    public void HideAllModel() {
+        foreach (MyZhijia item in zhijias) {
+            item.ShowOrHideModel(false);
         }
     }
 

@@ -167,6 +167,10 @@ public class MyGuaban : MonoBehaviour {
             $"刮板：{NormalizeAngle(transform.localEulerAngles.y)}, 连接头：{NormalizeAngle(Lianjietou.localEulerAngles.y)}, 推杆：{NormalizeAngle(targetTuiganRotation.eulerAngles.y)}");
     }
 
+    public Vector2 GetVector2(Transform t) {
+        return new Vector2(t.position.x, t.position.z);
+    }
+
     /// <summary>
     /// 基于刮板旋转角和连接头旋转角的范围，使两个刮板连接点处于最小距离，且两个刮板不能有重叠部分
     /// </summary>
@@ -174,6 +178,8 @@ public class MyGuaban : MonoBehaviour {
     private void CalcRotate(Transform neighborTop, Transform neighborBottom, Transform neighbor, Transform self,
         float guabanMinAngle, float guabanMaxAngle, float lianjietouMinAngle, float lianjietouMaxAngle, float tuiganMinAngle, float tuiganMaxAngle, float angleDelta,
         ref int loopCount, ref float minDistance, ref Quaternion targetRotation, ref Quaternion targetLianjietouRotation, ref Quaternion targetTuiganRotation, float epsilon = 0.0001f) {
+
+        var rectVertices = new Vector2[] { GetVector2(GetCorner(CornerDirection.左上)), GetVector2(GetCorner(CornerDirection.右上)), GetVector2(GetCorner(CornerDirection.右下)), GetVector2(GetCorner(CornerDirection.左下)) };
 
         int i = 0;
         SelfFront.MoveOnlyWithAngle((tuiganMinAngle + tuiganMaxAngle) / 2);
@@ -186,7 +192,7 @@ public class MyGuaban : MonoBehaviour {
                 while (NormalizeAngle(transform.localEulerAngles.y) <= guabanMaxAngle + epsilon) {
                     loopCount++;
                     float distance = (self.position - neighbor.position).sqrMagnitude;
-                    if (distance < minDistance && !JL.IsSegmentIntersectingRectangle(neighborTop, neighborBottom, GetCorner(CornerDirection.左上), GetCorner(CornerDirection.右上), GetCorner(CornerDirection.右下), GetCorner(CornerDirection.左下))) {
+                    if (distance < minDistance && !JL.IsSegmentIntersectingRectangle(GetVector2(neighborTop), GetVector2(neighborBottom), rectVertices)) {
                         minDistance = distance;
                         targetRotation = transform.localRotation;
                         targetLianjietouRotation = Lianjietou.localRotation;

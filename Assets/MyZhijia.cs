@@ -39,4 +39,10 @@ public class MyZhijia : MonoBehaviour {
         Gizmos.color = Color.blue;
         Gizmos.DrawLine(headPoint.position, wholePoint.position);
     }
+
+    public void ShowOrHideModel(bool show) {
+        foreach (var item in GetComponentsInChildren<MeshRenderer>(true)) {
+            item.gameObject.SetActive(show);
+        }
+    }
 }

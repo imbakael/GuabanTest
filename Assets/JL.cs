@@ -38,25 +38,6 @@ public class JL : MonoBehaviour {
         Gizmos.DrawLine(headPoint.position, wholePoint.position);
     }
 
-    /// <summary>
-    /// 判断线段是否与矩形相交(线段在矩形内部也视为相交)
-    /// </summary>
-    /// <param name="a"></param>
-    /// <param name="b"></param>
-    /// <param name="leftTop"></param>
-    /// <param name="rightTop"></param>
-    /// <param name="rightBottom"></param>
-    /// <param name="leftBottom"></param>
-    /// <returns></returns>
-    public static bool IsSegmentIntersectingRectangle(Transform a, Transform b, Transform leftTop, Transform rightTop, Transform rightBottom, Transform leftBottom) {
-        Vector2[] rectVertices = new Vector2[] { GetVector2(leftTop), GetVector2(rightTop), GetVector2(rightBottom), GetVector2(leftBottom) };
-        return IsSegmentIntersectingRectangle(GetVector2(a), GetVector2(b), rectVertices);
-    }
-
-    public static Vector2 GetVector2(Transform t) {
-        return new Vector2(t.position.x, t.position.z);
-    }
-
     public static bool IsSegmentIntersectingRectangle(Vector2 segStart, Vector2 segEnd, Vector2[] rectVertices) {
         // 1. 快速检查：线段端点是否在矩形内
         if (IsPointInRectangle(segStart, rectVertices) || IsPointInRectangle(segEnd, rectVertices)) {

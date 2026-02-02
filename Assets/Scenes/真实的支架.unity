@@ -178,8 +178,40 @@ PrefabInstance:
       propertyPath: m_Name
       value: "\u5DE61"
       objectReference: {fileID: 0}
+    - target: {fileID: 1310226851522627587, guid: fa8e44fc437184641803fc7d6f71d863, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1663689830331297180, guid: fa8e44fc437184641803fc7d6f71d863, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4136324006174267919, guid: fa8e44fc437184641803fc7d6f71d863, type: 3}
       propertyPath: isActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5651336117773734171, guid: fa8e44fc437184641803fc7d6f71d863, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5651336118156225136, guid: fa8e44fc437184641803fc7d6f71d863, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5651336118359494496, guid: fa8e44fc437184641803fc7d6f71d863, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5651336118426320241, guid: fa8e44fc437184641803fc7d6f71d863, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5651336118522913047, guid: fa8e44fc437184641803fc7d6f71d863, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6770957718054336708, guid: fa8e44fc437184641803fc7d6f71d863, type: 3}
+      propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -250,10 +282,46 @@ PrefabInstance:
       propertyPath: m_Name
       value: "\u5DE62"
       objectReference: {fileID: 0}
+    - target: {fileID: 1310226851522627587, guid: fa8e44fc437184641803fc7d6f71d863, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1663689830331297180, guid: fa8e44fc437184641803fc7d6f71d863, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4136324006174267919, guid: fa8e44fc437184641803fc7d6f71d863, type: 3}
+      propertyPath: useTop
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4136324006174267919, guid: fa8e44fc437184641803fc7d6f71d863, type: 3}
       propertyPath: activeZhijia
       value: 
       objectReference: {fileID: 422613862}
+    - target: {fileID: 5651336117773734171, guid: fa8e44fc437184641803fc7d6f71d863, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5651336118156225136, guid: fa8e44fc437184641803fc7d6f71d863, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5651336118359494496, guid: fa8e44fc437184641803fc7d6f71d863, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5651336118426320241, guid: fa8e44fc437184641803fc7d6f71d863, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5651336118522913047, guid: fa8e44fc437184641803fc7d6f71d863, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6770957718054336708, guid: fa8e44fc437184641803fc7d6f71d863, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fa8e44fc437184641803fc7d6f71d863, type: 3}
 --- !u!114 &942092832 stripped
@@ -383,10 +451,10 @@ MonoBehaviour:
   zhijias:
   - {fileID: 422613862}
   - {fileID: 942092832}
-  maxGuabanAngle: 1
+  maxGuabanAngle: 0
   maxLianjietouAngle: 1
   maxTuiganAngle: 0
-  yalingxiaoLength: 0.016
+  yalingxiaoLength: 0.01
   SqrYalingxiaoLength: 0
   length: 1.697
   width: 1.2619
