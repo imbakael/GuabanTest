@@ -14,17 +14,6 @@ public class JL : MonoBehaviour {
     public Transform headPoint;
     public Transform middlePoint;
 
-    private void Update() {
-        //if (Input.GetKeyDown(KeyCode.Space)) {
-        //    for (int i = 0; i < corners.Length; i++) {
-        //        Vector3 one = corners[i].position;
-        //        Vector3 other = corners[(i + 1) % corners.Length].position;
-        //        Debug.Log($"i {i}, distance : {Vector3.Distance(one, other)}, " +
-        //            $" xzD : {Vector2.Distance(new Vector2(one.x, one.z), new Vector2(other.x, other.z))}, yD : {other.y - one.y}");
-        //    }
-        //}
-    }
-
     private void OnDrawGizmos() {
         Gizmos.color = Color.green;
         for (int i = 0; i < corners.Length; i++) {
@@ -98,4 +87,55 @@ public class JL : MonoBehaviour {
     }
     // 跨立实验：通过叉积符号判断点与线段的位置关系
     private static float Cross(Vector2 v1, Vector2 v2) => v1.x * v2.y - v1.y * v2.x;
+
+    public float maxXingcheng = 800f;
+    public int maxCurveZhijiaCount = 10;
+
+    public List<XingchengData> tempXC = new List<XingchengData> {
+        new() {
+            no = 1,
+            value = 80f
+        },
+        new() {
+            no = 2,
+            value = 100f
+        },
+        new() {
+            no = 3,
+            value = 800f
+        },
+        new() {
+            no = 4,
+            value = 780f
+        }
+    };
+
+    public bool ExistCurve(List<XingchengData> xcData, out int minNo, out int maxNo) {
+        minNo = 0;
+        maxNo = 0;
+
+        float standardK = maxXingcheng / maxCurveZhijiaCount;
+
+        for (int i = 0; i < xcData.Count; i++) {
+            if (i - 1 < 0 || i + 1 > xcData.Count - 1) {
+                continue;
+            }
+            XingchengData preXC = xcData[i - 1];
+            XingchengData curXC = xcData[i];
+            XingchengData nextXC = xcData[i + 1];
+            float preK = curXC.value - preXC.value;
+            float nextK = nextXC.value - curXC.value;
+            float averageK = (preK + nextK) / 2f;
+
+        }
+
+        return minNo != 0 && maxNo != 0;
+    }
+
+}
+
+[System.Serializable]
+public class XingchengData {
+    public int no;
+    public float value;
 }

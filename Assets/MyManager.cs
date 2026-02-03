@@ -36,12 +36,16 @@ public class MyManager : MonoBehaviour {
     public float length = 1f;
     public float width = 0.5f;
 
+    public Transform one;
+    public Transform two;
+
     public static MyManager Instance;
 
     private void Awake() {
         Instance = this;
         //yalingxiaoLength = Mathf.PI / 180 * width * 1;
-        SqrYalingxiaoLength = yalingxiaoLength * yalingxiaoLength;
+        //SqrYalingxiaoLength = (yalingxiaoLength + 0.02f) * (yalingxiaoLength + 0.02f);
+        SqrYalingxiaoLength = 0.02996613f * 0.02996613f;
         for (int i = 0; i < zhijias.Length; i++) {
             MyZhijia curZhijia = zhijias[i];
             MyZhijia leftZhijia = i - 1 >= 0 ? zhijias[i - 1] : null;
@@ -63,6 +67,15 @@ public class MyManager : MonoBehaviour {
         foreach (MyZhijia item in zhijias) {
             item.ShowOrHideModel(false);
         }
+    }
+
+    [Button("œ‘ ææ‡¿Î")]
+    public void ShowDistance() {
+        Debug.Log(Vector3.Distance(one.position, two.position));
+    }
+    [Button("æ‡¿Î∆Ω∑Ω")]
+    public void ShowSQRDistance() {
+        Debug.Log((one.position - two.position).sqrMagnitude);
     }
 
     private void Update() {
