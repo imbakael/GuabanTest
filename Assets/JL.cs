@@ -94,19 +94,19 @@ public class JL : MonoBehaviour {
     public List<XingchengData> tempXC = new List<XingchengData> {
         new() {
             no = 1,
-            value = 80f
+            tuiLiuXC = 80f
         },
         new() {
             no = 2,
-            value = 100f
+            tuiLiuXC = 100f
         },
         new() {
             no = 3,
-            value = 800f
+            tuiLiuXC = 800f
         },
         new() {
             no = 4,
-            value = 780f
+            tuiLiuXC = 780f
         }
     };
 
@@ -123,8 +123,8 @@ public class JL : MonoBehaviour {
             XingchengData preXC = xcData[i - 1];
             XingchengData curXC = xcData[i];
             XingchengData nextXC = xcData[i + 1];
-            float preK = curXC.value - preXC.value;
-            float nextK = nextXC.value - curXC.value;
+            float preK = curXC.tuiLiuXC - preXC.tuiLiuXC;
+            float nextK = nextXC.tuiLiuXC - curXC.tuiLiuXC;
             float averageK = (preK + nextK) / 2f;
 
         }
@@ -137,5 +137,5 @@ public class JL : MonoBehaviour {
 [System.Serializable]
 public class XingchengData {
     public int no;
-    public float value;
+    public float tuiLiuXC;
 }
