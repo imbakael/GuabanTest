@@ -3514,8 +3514,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   chart: {fileID: 1527017099}
-  jsonName: bd1
-  curIndex: 0
+  jsonNames:
+  - zj_data_1764
+  - zj_data_1765_1
+  - zj_data_1765_2
+  - zj_data_1766_1
+  - zj_data_1766_2
+  jsonName: 
+  curOuterIndex: 0
+  curInnerIndex: 0
 --- !u!1 &987099072
 GameObject:
   m_ObjectHideFlags: 0
