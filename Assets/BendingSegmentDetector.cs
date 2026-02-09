@@ -48,7 +48,7 @@ public class BendingSegmentDetector {
 
             if (slopeDifference <= _tolerance) {
                 result.Add(child[0].no);
-                Debug.Log($"minNo:{minNo}, xc:{minValue}, maxNo:{maxNo}, xc:{maxValue}, actualSlope:{actualSlope}");
+                Debug.Log($"{child[0].no}    minNo:{minNo}, xc:{minValue}, maxNo:{maxNo}, xc:{maxValue}, actualSlope:{actualSlope}");
             }
         }
 

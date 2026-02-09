@@ -73,11 +73,9 @@ public class XchartTest : MonoBehaviour
             List<int> segments = detector.DetectBendingSegments(cur);
             Debug.Log($"segments.count £º{segments.Count}");
             if (segments.Count > 0) {
-                foreach (int startNo in segments) {
-                    Debug.Log($"ÍäÇú¶ÎÖ§¼ÜºÅ£º {startNo} ");
-                }
+                Debug.Log(string.Join(",", segments));
             } else {
-                Debug.Log("Î´¼ì²âµ½Ã÷ÏÔµÄÍäÇú¶Î¡£");
+                Debug.LogError("Î´¼ì²âµ½Ã÷ÏÔµÄÍäÇú¶Î¡£");
             }
         }
     }
