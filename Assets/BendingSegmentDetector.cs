@@ -46,9 +46,10 @@ public class BendingSegmentDetector {
 
             float slopeDifference = Math.Abs(Math.Abs(actualSlope) - theoreticalSlope);
 
+            float a = (child[child.Count - 1].tuiLiuXC - child[0].tuiLiuXC) / 10;
+            Debug.Log($"{child[0].no}    minNo:{minNo}, xc:{minValue}, maxNo:{maxNo}, xc:{maxValue}, actualSlope:{actualSlope}, สืฮฒ:{a}");
             if (slopeDifference <= _tolerance) {
                 result.Add(child[0].no);
-                Debug.Log($"{child[0].no}    minNo:{minNo}, xc:{minValue}, maxNo:{maxNo}, xc:{maxValue}, actualSlope:{actualSlope}");
             }
         }
 
